@@ -6,46 +6,65 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import org.junit.Assert;
 
-public class testMain {
+public class registerTest {
 
-	public void LandingPageTest() throws Exception{
-		String baseUrl = "https://shrouded-plateau-90984.herokuapp.com/";
-		String expectedTitle = "BookLink";
-		String actualTitle = "";
-		System.setProperty("webdriver.chrome.driver", "C:\\Projects\\Selenium\\chromedriver.exe");
-		
-		WebDriver driver = new ChromeDriver();
-		
-		driver.get(baseUrl);
-		driver.manage().window().maximize();
-		actualTitle = driver.getTitle();
-		
-		Assert.assertEquals(actualTitle, expectedTitle);
-		
-		driver.close();
-	}
-	
-	
-	public void MainPageNavigateTest() throws Exception{
+	public void navigateToRegister() throws Exception{
 		String baseUrl = "https://shrouded-plateau-90984.herokuapp.com/";
 		String expectedTitle = "BookLink";
 		String actualTitle = "";
 		String textExpected = "";
 		System.setProperty("webdriver.chrome.driver", "C:\\Projects\\Selenium\\chromedriver.exe");
+		
 		WebDriver driver = new ChromeDriver();
 		
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
-		actualTitle = driver.getTitle();
-		driver.findElement(By.linkText("View All Book Entries")).isDisplayed();
-
-		Assert.assertEquals(actualTitle, expectedTitle);
 		
-		textExpected = "Welcome to BookLink".toLowerCase();
+		driver.findElement(By.linkText("View All Book Entries")).isDisplayed();
+		
+		actualTitle = driver.getTitle();
+		Assert.assertEquals(actualTitle, expectedTitle);
 		driver.findElement(By.linkText("View All Book Entries")).click();
-		String title = driver.findElement(By.id("mainTitle")).getText().toLowerCase();
-		Assert.assertEquals(title, textExpected);
+		driver.findElement(By.id("register")).isDisplayed();
+		
+		textExpected = "Please Register".toLowerCase();
+		driver.findElement(By.id("register")).click();
+		String registerTitle = driver.findElement(By.cssSelector(".h3")).getText().toLowerCase();
+		Assert.assertEquals(textExpected, registerTitle);
 		
 		driver.close();
+	}
+	
+	public void registerValid() throws Exception{
+		String baseUrl = "https://shrouded-plateau-90984.herokuapp.com/";
+		String expectedTitle = "BookLink";
+		String actualTitle = "";
+		String textExpected = "";
+		System.setProperty("webdriver.chrome.driver", "C:\\Projects\\Selenium\\chromedriver.exe");
+		
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get(baseUrl);
+		driver.manage().window().maximize();
+		driver.findElement(By.linkText("View All Book Entries")).isDisplayed();
+
+		actualTitle = driver.getTitle();
+		Assert.assertEquals(actualTitle, expectedTitle);
+		
+		
+		driver.findElement(By.linkText("View All Book Entries")).click();
+		driver.findElement(By.id("register")).isDisplayed();
+		
+		driver.findElement(By.id("register")).click();
+		
+		driver.findElement(By.id("inputUsername")).sendKeys("Test");
+		driver.findElement(By.id("inputPassword")).sendKeys("password");
+		driver.findElement(By.id("inputFirstName")).sendKeys("Test");
+		driver.findElement(By.id("inputLastName")).sendKeys("Testing");
+		driver.findElement(By.id("inputEmail")).sendKeys("testinground4@gmail.com");
+		
+		
+
+		
 	}
 }
